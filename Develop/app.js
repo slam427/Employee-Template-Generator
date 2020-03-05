@@ -65,16 +65,6 @@ const engineerQuestions = [
     type: "input"
     }
 ];
-
-const addTeamMember = inquirer.prompt([
-    {
-    name: "Yes",
-    message: "Would you like to add another team member?",
-    type:"confirm"
-    }
-]);
-
-
 // console.log(newEmployeeQuestions.name);
 
 
@@ -82,9 +72,9 @@ const addTeamMember = inquirer.prompt([
 
 // })
 // }
-employeeInfo();
+employeeData();
 
-function employeeInfo() {
+function employeeData() {
 inquirer.prompt(newEmployeeQuestions).then(function(info){
 if(info.role != "Team is complete.") {
 
@@ -93,13 +83,6 @@ if(info.role != "Team is complete.") {
             const newManager = new Manager (info.name, info.id, info.email, officeNumber);
             devTeam.push(newManager);
             // console.log(newManager);
-            addTeamMember();
-            if(addTeamMember.Yes === true) {
-                employeeInfo();
-            }
-            else {
-                return "Your team is complete!"
-            }
         });
     }
 
@@ -108,13 +91,6 @@ if(info.role != "Team is complete.") {
             const newIntern = new Intern (info.name, info.id, info.email, school);
             devTeam.push(newIntern);
             console.log(newIntern);
-            addTeamMember();
-            if(addTeamMember.Yes === true) {
-                employeeInfo();
-            }
-            else {
-                return "Your team is complete!"
-            }
         });
     }
 
@@ -123,14 +99,6 @@ if(info.role != "Team is complete.") {
             const newEngineer = new Engineer (info.name, info.id, info.email, github);
             devTeam.push(newEngineer);
             console.log(newEngineer);
-            addTeamMember(another);
-            addTeamMember();
-            if(addTeamMember.Yes === true) {
-                employeeInfo();
-            }
-            else {
-                return "Your team is complete!"
-            }
         });
     }
 }
@@ -138,5 +106,4 @@ else {
     return "Team is complete!"
 }
 })
-
 }
