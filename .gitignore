@@ -1,5 +1,5 @@
 Assets/
 .DS_store
-node_module/
+node_modules/
 package-lock.json
 .vscode/
