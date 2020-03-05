@@ -1,13 +1,16 @@
 const path = require("path");
 const fs = require("fs");
 
+//review 
 const templatesDir = path.resolve(__dirname, "../templates");
 
 const render = employees => {
-  const html = [];
+const html = [];
 
   html.push(employees
+    //loops through & filters for role 'manager' and creates the array
     .filter(employee => employee.getRole() === "Manager")
+    //loop through the newly created filtered array, map/loop(goes througb all elements and creates new array)
     .map(manager => renderManager(manager))
   );
   html.push(employees
