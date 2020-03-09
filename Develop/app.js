@@ -8,7 +8,8 @@ const OUTPUT_DIR = path.resolve(__dirname, "output")
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
-const devTeam = [];
+
+const employees = [];
 
 const newEmployeeQuestions = [
     {
@@ -60,83 +61,104 @@ const internQuestions = [
 
 const engineerQuestions = [
     {
-        name: "gitHub",
+        name: "github",
         message: "What is the engineer's Github username?",
         type: "input"
     }
 ];
 
-const newMember = [
+const addAnother = [
     {
         name: "addMember",
-        message: "Would you like to add another member?",
+        message: "Would you like to add another member to your team?",
         type: "confirm"
     }
 ]
 
-function addMember(){
-return inquirer.prompt(newMember);
+function anotherMember() {
+    return inquirer.prompt(addAnother);
 }
-employeeData();
 
-function employeeData() {
+function addEmployee() {
     inquirer.prompt(newEmployeeQuestions).then(function (info) {
         if (info.role != "Team is complete.") {
 
             if (info.role === "Manager") {
                 inquirer.prompt(managerQuestions).then(function (officeNumber) {
                     const newManager = new Manager(info.name, info.id, info.email, officeNumber.officeNumber);
-                    devTeam.push(newManager);
-                    // console.log(newManager);
-                    addMember().then(function(addAnother){
-                        console.log(addAnother);
-                        if(addAnother.addMember === true) {
-                            employeeData();
+                    console.log("Manager added to team.")
+                    employees.push(newManager);
+                    console.log(newManager);
+                    anotherMember().then(function(addOne) {
+                        if (addOne.teamMember= true) {
+                            addEmployee();
+                        } else if (addOne.teamMember = false) {
+                            console.log(addOne.teamMember)
+                            let createTeam = render(employees);
+                            fs.writeFileSync(outputPath, createTeam, function (err) {
+                                if (err) throw err;
+                            });
                         }
-                        else {
-                            console.log("Your team is complete!")
-                        }
-                    });
+                    })
                 });
             }
 
             if (info.role === "Intern") {
                 inquirer.prompt(internQuestions).then(function (school) {
                     //passes inputs to new instance of intern class
+                    console.log("Intern added to team.")
                     const newIntern = new Intern(info.name, info.id, info.email, school.school);
-                    devTeam.push(newIntern);
+                    employees.push(newIntern);
                     console.log(newIntern);
-                    addMember().then(function(addAnother){
-                        if(addAnother.addMember === true) {
-                            employeeData();
+                    anotherMember().then(function(addOne) {
+                        if (addOne.teamMember = true) {
+                            addEmployee();
+                        } else if (addOne.teamMember = false) {
+                            console.log(addOne.teamMember)
+                            let createTeam = render(employees);
+                            fs.writeFileSync(outputPath, createTeam, function (err) {
+                                if (err) throw err;
+                            });
                         }
-                        else {
-                            console.log("Your team is complete!")
-                        }
-                    });
+                    })
                 });
             }
 
             if (info.role === "Engineer") {
                 inquirer.prompt(engineerQuestions).then(function (github) {
+                    console.log("Engineer added to team.")
                     const newEngineer = new Engineer(info.name, info.id, info.email, github.github);
-                    devTeam.push(newEngineer);
+                    employees.push(newEngineer);
                     console.log(newEngineer);
-                    addMember().then(function(addAnother){
-                        if(addAnother.addMember === true) {
-                            employeeData();
+                    anotherMember().then(function(addOne) {
+                        if (addOne.teamMember= true) {
+                            addEmployee();
+                        } else if (addOne.teamMember = false) {
+                            console.log(addOne.teamMember)
+                            let createTeam = render(employees);
+                            fs.writeFileSync(outputPath, createTeam, function (err) {
+                                if (err) throw err;
+                            });
                         }
-                        else {
-                            console.log("Your team is complete!")
-                        }
-                    });
+                    })
                 });
             }
         }
-        //code to render team goes here
-        //write to html
-    })
+
+    });
 }
+addEmployee();
+
+
+// if(addMember.addAnother  = true) {
+//     addEmployee();
+// } else {
+//     console.log(addMember.addAnother)
+//     let createTeam = render(employees);
+//     fs.writeFileSync(outputPath, createTeam, function(err) {
+//     if (err) throw err;
+//     });
+// }
 
 
 //writefile what and where, find where you are done building team) insert there (manager questions) within scope of the function
