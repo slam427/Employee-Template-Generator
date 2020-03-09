@@ -67,16 +67,16 @@ const engineerQuestions = [
     }
 ];
 
-const addAnother = [
+const anotherMember = [
     {
-        name: "addMember",
+        name: "teamMember",
         message: "Would you like to add another member to your team?",
         type: "confirm"
     }
 ]
 
-function anotherMember() {
-    return inquirer.prompt(addAnother);
+function addingAnother() {
+    return inquirer.prompt(anotherMember);
 }
 
 function addEmployee() {
@@ -84,20 +84,25 @@ function addEmployee() {
         if (info.role != "Team is complete.") {
 
             if (info.role === "Manager") {
+                //passes inputs to new instance of manager class
                 inquirer.prompt(managerQuestions).then(function (officeNumber) {
                     const newManager = new Manager(info.name, info.id, info.email, officeNumber.officeNumber);
                     console.log("Manager added to team.")
                     employees.push(newManager);
                     console.log(newManager);
-                    anotherMember().then(function(addOne) {
-                        if (addOne.teamMember= true) {
-                            addEmployee();
-                        } else if (addOne.teamMember = false) {
-                            console.log(addOne.teamMember)
+                    addingAnother().then(function (addAnother) {
+                        console.log(addAnother)
+                        if (addAnother.teamMember === false) {
+                            //not reaching here...why?
+                            console.log("check on value of addAnother.teamember", addAnother.teamMember);
                             let createTeam = render(employees);
                             fs.writeFileSync(outputPath, createTeam, function (err) {
                                 if (err) throw err;
                             });
+                        }
+                        if (addAnother.teamMember === true) {
+                            addEmployee();
+                            //stops after invokingaddingAnother...why?
                         }
                     })
                 });
@@ -105,20 +110,20 @@ function addEmployee() {
 
             if (info.role === "Intern") {
                 inquirer.prompt(internQuestions).then(function (school) {
-                    //passes inputs to new instance of intern class
                     console.log("Intern added to team.")
                     const newIntern = new Intern(info.name, info.id, info.email, school.school);
                     employees.push(newIntern);
                     console.log(newIntern);
-                    anotherMember().then(function(addOne) {
-                        if (addOne.teamMember = true) {
-                            addEmployee();
-                        } else if (addOne.teamMember = false) {
-                            console.log(addOne.teamMember)
+                    addingAnother().then(function (addAnother) {
+                        if (addAnother.teamMember === false) {
+                            console.log("check on value of addAnother.teamember", addAnother.teamMember)
                             let createTeam = render(employees);
                             fs.writeFileSync(outputPath, createTeam, function (err) {
                                 if (err) throw err;
                             });
+                        }
+                        if (addAnother.teamMember === true) {
+                            addEmployee();
                         }
                     })
                 });
@@ -130,21 +135,27 @@ function addEmployee() {
                     const newEngineer = new Engineer(info.name, info.id, info.email, github.github);
                     employees.push(newEngineer);
                     console.log(newEngineer);
-                    anotherMember().then(function(addOne) {
-                        if (addOne.teamMember= true) {
-                            addEmployee();
-                        } else if (addOne.teamMember = false) {
-                            console.log(addOne.teamMember)
+                    addingAnother().then(function (addAnother) {
+                        if (addAnother.teamMember === false) {
+                            console.log("check on value of addAnother.teamember", addAnother.teamMember)
                             let createTeam = render(employees);
                             fs.writeFileSync(outputPath, createTeam, function (err) {
                                 if (err) throw err;
                             });
                         }
+                        if (addAnother.teamMember === true) {
+                            addEmployee();
+                        }
                     })
                 });
             }
         }
-
+        // else {
+        //     let createTeam = render(employees);
+        //     fs.writeFileSync(outputPath, createTeam, function (err) {
+        //     if (err) throw err;
+        //     });
+        // }
     });
 }
 addEmployee();
