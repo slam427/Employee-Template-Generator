@@ -8,7 +8,6 @@ const OUTPUT_DIR = path.resolve(__dirname, "output")
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
-
 const employees = [];
 
 const newEmployeeQuestions = [
@@ -82,19 +81,13 @@ function addingAnother() {
 function addEmployee() {
     inquirer.prompt(newEmployeeQuestions).then(function (info) {
         if (info.role != "Team is complete.") {
-
             if (info.role === "Manager") {
-                //passes inputs to new instance of manager class
                 inquirer.prompt(managerQuestions).then(function (officeNumber) {
                     const newManager = new Manager(info.name, info.id, info.email, officeNumber.officeNumber);
                     console.log("Manager added to team.")
                     employees.push(newManager);
-                    console.log(newManager);
                     addingAnother().then(function (addAnother) {
-                        console.log(addAnother)
                         if (addAnother.teamMember === false) {
-                            //not reaching here...why?
-                            console.log("check on value of addAnother.teamember", addAnother.teamMember);
                             let createTeam = render(employees);
                             fs.writeFileSync(outputPath, createTeam, function (err) {
                                 if (err) throw err;
@@ -102,7 +95,6 @@ function addEmployee() {
                         }
                         if (addAnother.teamMember === true) {
                             addEmployee();
-                            //stops after invokingaddingAnother...why?
                         }
                     })
                 });
@@ -113,10 +105,8 @@ function addEmployee() {
                     console.log("Intern added to team.")
                     const newIntern = new Intern(info.name, info.id, info.email, school.school);
                     employees.push(newIntern);
-                    console.log(newIntern);
                     addingAnother().then(function (addAnother) {
                         if (addAnother.teamMember === false) {
-                            console.log("check on value of addAnother.teamember", addAnother.teamMember)
                             let createTeam = render(employees);
                             fs.writeFileSync(outputPath, createTeam, function (err) {
                                 if (err) throw err;
@@ -134,10 +124,8 @@ function addEmployee() {
                     console.log("Engineer added to team.")
                     const newEngineer = new Engineer(info.name, info.id, info.email, github.github);
                     employees.push(newEngineer);
-                    console.log(newEngineer);
                     addingAnother().then(function (addAnother) {
                         if (addAnother.teamMember === false) {
-                            console.log("check on value of addAnother.teamember", addAnother.teamMember)
                             let createTeam = render(employees);
                             fs.writeFileSync(outputPath, createTeam, function (err) {
                                 if (err) throw err;
@@ -150,26 +138,7 @@ function addEmployee() {
                 });
             }
         }
-        // else {
-        //     let createTeam = render(employees);
-        //     fs.writeFileSync(outputPath, createTeam, function (err) {
-        //     if (err) throw err;
-        //     });
-        // }
+
     });
 }
 addEmployee();
-
-
-// if(addMember.addAnother  = true) {
-//     addEmployee();
-// } else {
-//     console.log(addMember.addAnother)
-//     let createTeam = render(employees);
-//     fs.writeFileSync(outputPath, createTeam, function(err) {
-//     if (err) throw err;
-//     });
-// }
-
-
-//writefile what and where, find where you are done building team) insert there (manager questions) within scope of the function
