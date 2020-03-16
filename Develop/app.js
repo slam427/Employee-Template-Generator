@@ -88,6 +88,7 @@ function addEmployee() {
                     employees.push(newManager);
                     addingAnother().then(function (addAnother) {
                         if (addAnother.teamMember === false) {
+                            console.log("Your team is complete.")
                             let createTeam = render(employees);
                             fs.writeFileSync(outputPath, createTeam, function (err) {
                                 if (err) throw err;
@@ -107,6 +108,7 @@ function addEmployee() {
                     employees.push(newIntern);
                     addingAnother().then(function (addAnother) {
                         if (addAnother.teamMember === false) {
+                            console.log("Your team is complete.")
                             let createTeam = render(employees);
                             fs.writeFileSync(outputPath, createTeam, function (err) {
                                 if (err) throw err;
@@ -126,6 +128,7 @@ function addEmployee() {
                     employees.push(newEngineer);
                     addingAnother().then(function (addAnother) {
                         if (addAnother.teamMember === false) {
+                            console.log("Your team is complete.")
                             let createTeam = render(employees);
                             fs.writeFileSync(outputPath, createTeam, function (err) {
                                 if (err) throw err;
