@@ -1,6 +1,6 @@
 # Template Generator
 
-![Team generator team page](/images/main.png)
+![Team generator team page](../Employee-Template-Generator/image/main.png)
 
 
 ## Description
@@ -13,3 +13,4 @@ https://slam427.github.io/Employee-Template-Generator/
 
 Video Link:
 https://drive.google.com/file/d/1DTzL7N_F-p9eZxBtmm603LtO73BYEWx9/view
+
